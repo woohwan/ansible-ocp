@@ -1,0 +1,8 @@
+ocp_client_url_prefix: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp"
+
+openshift_client_versions:
+  ocp:
+    archive_url: "{{ ocp_client_url_prefix }}/{{ openshift_install_config.version }}/openshift-client-linux-{{ openshift_install_config.version }}.tar.gz"
+
+openshift_client:
+  archive_url: "{{ openshift_client_versions[openshift_install_config.distribution].archive_url }}"

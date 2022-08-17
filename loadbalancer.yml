@@ -1,0 +1,4 @@
+- hosts: bastion
+  tasks:
+    - import_role:
+        name: loadbalancer

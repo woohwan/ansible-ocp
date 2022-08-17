@@ -1,0 +1,49 @@
+---
+# tasks file for loadbalancer
+- name: Install haproxy
+  ansible.builtin.yum:
+    name: haproxy
+    state: present
+  become: true
+
+- name: Allow HAProxy to listen under SELinux
+  ansible.posix.seboolean:
+    name: haproxy_connect_any
+    state: yes
+    persistent: yes
+  become: yes
+
+- name: Is firewalld running?
+  command: firewalld-cmd --state
+  changed_when: False
+  failed_when: False
+  register: firewalld
+  become: true
+
+- name: Enable ports on firewall
+  ansible.posix.firewalld:
+    port: "{{ item }}/tcp"
+    permanent: yes
+    immediate: yes
+    state: enabled
+  when: firewalld.rc == 0
+  with_items:
+    - 6443
+    - 22623
+    - 443
+    - 80
+  become: true
+
+- name: Start Haproxy
+  service:
+    name: haproxy
+    state: started
+    enabled: true
+  become: true
+
+- name: Add Openshift nodes to the load balancer
+  blockinfile:
+    block: '{{ lookup("template", "haproxy.cfg")}}'
+    dest: /etc/haproxy/haproxy.cfg
+  notify: Restart haproxy
+  become: true

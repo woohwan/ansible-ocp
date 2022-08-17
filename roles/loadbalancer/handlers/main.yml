@@ -1,0 +1,7 @@
+---
+# handlers file for loadbalancer
+- name: Restart haproxy
+  service:
+    name: haproxy
+    state: restarted
+  become: true

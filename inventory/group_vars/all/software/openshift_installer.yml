@@ -1,0 +1,8 @@
+ocp_installer_url_prefix: "https://mirror.openshift.com/pub/openshift-v4/clients/ocp"
+
+openshift_installer_versions:
+  ocp:
+    archive_url: "{{ ocp_installer_url_prefix }}/{{ openshift_install_config.version }}/openshift-install-linux-{{ openshift_install_config.version }}.tar.gz"
+
+openshift_installer:
+  archive_url: "{{ openshift_installer_versions[openshift_install_config.distribution].archive_url }}"

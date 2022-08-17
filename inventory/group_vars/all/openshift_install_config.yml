@@ -1,0 +1,9 @@
+# Openshift Installer configuration
+openshift_install_config:
+  # Choose Openshift distribution
+  distribution: ocp
+  version: 4.9.40
+  # cluster name
+  name: mycluster
+  # base domain
+  base_domain: example.com

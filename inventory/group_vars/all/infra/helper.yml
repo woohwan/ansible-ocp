@@ -1,0 +1,6 @@
+helper:
+  # ansible_env 사용은 되도록이면 지양
+  install_dir: '{{ ansible_env["HOME"] }}/openshift-workspace'
+  install_bin_dir: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin'
+  oc_exe: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin/oc'
+  install_exe: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin/openshift-install'
