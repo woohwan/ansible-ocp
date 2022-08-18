@@ -1,0 +1,7 @@
+dnsmasq:
+  common_options:
+    - interface: "*"
+    - except-interface: virbr0
+    - bind-dynamic:
+    - log-queries:
+    - log-dhcp:

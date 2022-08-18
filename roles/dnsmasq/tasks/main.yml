@@ -1,0 +1,23 @@
+---
+# tasks file for dnsmasq
+- name: Install dnsmasq
+  yum:
+    name: dnsmasq
+    state: present
+  become: true
+
+- name: Enable dnsmasq on boot and start it
+  service:
+    name: dnsmasq
+    state: started
+    enabled: true
+  become: true
+
+- name: dnsmasq common configutration
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: dnsmasq.openshift-auto-upi.common.conf, dest: /etc/dnsmasq.d }
+  notify: Restart dnsmasq
+  become: true
