@@ -1,0 +1,29 @@
+---
+# tasks file for dns-server
+- name: is firewalld running?
+  ansible.builtin.command:
+    cmd: firewall-cmd --state
+  changed_when: false
+  failed_when: false
+  register: firewalld
+  become: true
+
+- name: Enable dns service on firewall
+  ansible.posix.firewalld:
+    service: dns
+    permanent: true
+    immediate: true
+    state: enabled
+  when: firewalld.rc == 0
+  become: true
+
+- name: Add Openshift DNS records
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '0644'
+  with_items:
+    - { src: dnsmasq.openshift-auto-upi.dns.conf, dest: /etc/dnsmasq.d }
+    - { src: dnsmasq.openshift-auto-upi.addnhosts, dest: /etc }
+  notify: Restart dnsmasq
+  become: true

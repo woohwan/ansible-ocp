@@ -7,3 +7,5 @@ openshift_install_config:
   name: mycluster
   # base domain
   base_domain: example.com
+  # cluster domain FQDN
+  cluster_domain: mycluster.example.com

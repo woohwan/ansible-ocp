@@ -1,0 +1,29 @@
+---
+# tasks file for dhcp_server
+- name: Is firewalld running
+  ansible.builtin.command:
+    cmd: firewall-cmd --state
+  changed_when: false
+  failed_when: false
+  register: firewalld
+  become: true
+
+- name: Enable dhcp service on firewall
+  ansible.posix.firewalld:
+    service: dhcp
+    permanent: true
+    immediate: true
+    state: enabled
+  when: firewalld.rc == 0
+  become: true
+
+- name: Add Openshift DHCP records
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '0644'
+  with_items:
+    - { src: dnsmasq.openshift-auto-upi.dhcp.conf, dest: /etc/dnsmasq.d}
+    - { src: dnsmasq.openshift-auto-upi.hostsfile, dest: /etc}
+  notify: Restart dnsmasq
+  become: true
