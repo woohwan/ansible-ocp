@@ -9,5 +9,7 @@
       "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/main.yml",
       "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/generate_certificate.yml"
     ]
-  }
+  },
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
