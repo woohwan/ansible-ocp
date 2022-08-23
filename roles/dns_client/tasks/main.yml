@@ -1,0 +1,17 @@
+---
+# tasks file for dns_client
+- name: Enable in NetworkManager
+  ansible.builtin.template:
+    src: nm.openshift-auto-upi.global.conf
+    dest: /etc/NetworkManager/conf.d
+    mode: '0644'
+  notify: Restart NetworkManager
+  become: true
+
+- name: Forward queries against {{ openshift_install_config.cluster_domain }} domain to {{ dns_client.dns_server }}
+  ansible.builtin.template:
+    src: nm.openshift-auto-upi.dnsmasq.conf
+    dest: /etc/NetworkManager/dnsmasq.d
+    mode: '0644'
+  notify: Restart NetworkManager
+  become: true
