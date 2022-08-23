@@ -1,0 +1,4 @@
+- name: Generate private key
+  community.crypto.openssl_privatekey:
+    path: '{{ helper.mirror_registry_dir }}/certs/domain.key'
+    backup: true

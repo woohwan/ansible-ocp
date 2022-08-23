@@ -1,0 +1,6 @@
+mirror_registry:
+  certificate:
+    self_signed:
+      # Enter a hostname or an IP address of the host where the registry is going to be located.
+      # If using hostname, ensure that your hostname is in DNS and that it resolve to the expected
+      # IP address.
