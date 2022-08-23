@@ -4,3 +4,4 @@ helper:
   install_bin_dir: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin'
   oc_exe: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin/oc'
   install_exe: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin/openshift-install'
+  mirror_registry_dir: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/mirror_registry'

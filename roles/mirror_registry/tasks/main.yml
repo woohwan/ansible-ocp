@@ -1,2 +1,21 @@
 ---
 # tasks file for mirror_registry
+- name: Install required package
+  ansible.builtin.yum:
+    name: httpd-tools
+    state: present
+  become: true
+
+- name: Create a mirror registry direcory structure
+  ansible.builtin.file:
+    dest: '{{ item }}'
+    state: directory
+    mode: '0775'
+  with_items:
+    - '{{ helper.mirror_registry_dir }}'
+    - '{{ helper.mirror_registry_dir }}/auth'
+    - '{{ helper.mirror_registry_dir }}/certs'
+    - '{{ helper.mirror_registry_dir }}/data'
+
+- name: Generate self-signd certificate
+  import_tasks: generate_certificate.yml

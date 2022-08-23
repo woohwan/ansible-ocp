@@ -5,7 +5,9 @@
       "file:///home/admin/workplace/ansible-ocp/roles/dns-server/handlers/main.yml",
       "file:///home/admin/workplace/ansible-ocp/dns-server.yml",
       "file:///home/admin/workplace/ansible-ocp/roles/dhcp_server/tasks/main.yml",
-      "file:///home/admin/workplace/ansible-ocp/roles/dns_client/tasks/main.yml"
+      "file:///home/admin/workplace/ansible-ocp/roles/dns_client/tasks/main.yml",
+      "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/main.yml",
+      "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/generate_certificate.yml"
     ]
   }
 }
