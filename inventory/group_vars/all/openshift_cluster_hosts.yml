@@ -12,7 +12,7 @@ openshift_cluster_hosts:
     roles: [master]
     ipaddr: 192.168.150.21
     macaddr: 00:50:56:2e:f7:e3
-    num_cpus: 8
+    num_cpus: 4
     memory_gb: 16
     disk_gb: 120
     ignition_config: master.ign
@@ -21,8 +21,8 @@ openshift_cluster_hosts:
     roles: [infra]
     ipaddr: 192.168.150.22
     macaddr: 00:50:56:26:a5:df
-    num_cpus: 8
-    memory_gb: 16
+    num_cpus: 2
+    memory_gb: 8
     disk_gb: 120
     ignition_config: worker.ign
 
@@ -30,7 +30,7 @@ openshift_cluster_hosts:
     roles: [app]
     ipaddr: 192.168.150.23
     macaddr: 00:50:56:03:63:00
-    num_cpus: 8
+    num_cpus: 4
     memory_gb: 16
     disk_gb: 120
     ignition_config: worker.ign

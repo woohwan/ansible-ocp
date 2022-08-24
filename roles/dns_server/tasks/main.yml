@@ -14,14 +14,15 @@
     permanent: true
     immediate: true
     state: enabled
+    zone: internal
   when: firewalld.rc == 0
   become: true
 
 - name: Add Openshift DNS records
   ansible.builtin.template:
-    src: '{{ item.src }}'
-    dest: '{{ item.dest }}'
-    mode: '0644'
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
   with_items:
     - { src: dnsmasq.openshift-auto-upi.dns.conf, dest: /etc/dnsmasq.d }
     - { src: dnsmasq.openshift-auto-upi.addnhosts, dest: /etc }

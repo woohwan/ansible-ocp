@@ -26,7 +26,8 @@
     permanent: yes
     immediate: yes
     state: enabled
-  when: firewalld.rc == 0
+    zone: external
+  # when: firewalld.rc == 0
   with_items:
     - 6443
     - 22623

@@ -15,6 +15,7 @@
 
 - name: Extract openshift-install
   unarchive:
+    remote_src: yes # target server에 압축파일이 존재하는 지 여부 설정
     src: "{{ helper.install_bin_dir }}/{{ openshift_installer.archive_url | basename }}"
     dest: "{{ helper.install_bin_dir }}"
     exclude:
@@ -28,6 +29,7 @@
 
 - name: Extract oc client
   unarchive:
+    remote_src: yes
     src: "{{ helper.install_bin_dir }}/{{ openshift_client.archive_url | basename }}"
     dest: "{{ helper.install_bin_dir }}"
     exclude:

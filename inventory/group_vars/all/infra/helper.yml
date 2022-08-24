@@ -5,3 +5,7 @@ helper:
   oc_exe: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin/oc'
   install_exe: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/bin/openshift-install'
   mirror_registry_dir: '{{ ansible_env["HOME"] }}/openshift-workspace/{{ openshift_install_config.name}}/mirror_registry'
+  web_dir: "/var/www/html/openshift-auto-upi"
+  web_cluster_dir: "/var/www/html/openshift-auto-upi/{{ openshift_install_config.name}}"
+  tftp_dir: "/var/lib/tftpboot/openshift-auto-upi"
+  tftp_cluster_dir: "/var/lib/tftpboot/openshift-auto-upi/{{ openshift_install_config.name }}"

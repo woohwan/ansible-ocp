@@ -7,7 +7,9 @@
       "file:///home/admin/workplace/ansible-ocp/roles/dhcp_server/tasks/main.yml",
       "file:///home/admin/workplace/ansible-ocp/roles/dns_client/tasks/main.yml",
       "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/main.yml",
-      "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/generate_certificate.yml"
+      "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/generate_certificate.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/web_server/tasks/main.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/web_server/handlers/main.yml"
     ]
   },
   "editor.tabSize": 2,
