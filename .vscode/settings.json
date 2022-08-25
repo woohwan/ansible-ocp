@@ -9,8 +9,15 @@
       "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/main.yml",
       "file:///home/admin/workplace/ansible-ocp/roles/mirror_registry/tasks/generate_certificate.yml",
       "file:///home/admin/workspace/ansible-ocp/roles/web_server/tasks/main.yml",
-      "file:///home/admin/workspace/ansible-ocp/roles/web_server/handlers/main.yml"
-    ]
+      "file:///home/admin/workspace/ansible-ocp/roles/web_server/handlers/main.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/pxe_server/tasks/main.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/pxe_server/handlers/main.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_vsphere/tasks/main.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_commons/tasks/generate_ignition.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_commons/tasks/generate_ignition_tasks.yml",
+      "file:///home/admin/workspace/ansible-ocp/files/commons/install-config.yaml"
+    ],
+    "https://raw.githubusercontent.com/ansible/schemas/main/f/ansible-ee.json": "file:///home/admin/workspace/ansible-ocp/openshift_vsphere.yml"
   },
   "editor.tabSize": 2,
   "editor.defaultFormatter": "esbenp.prettier-vscode"

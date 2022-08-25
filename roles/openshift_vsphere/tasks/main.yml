@@ -1,0 +1,6 @@
+---
+# tasks file for openshift_vsphere
+- name: Generate ignition configs
+  ansible.builtin.import_role:
+    name: openshift_commons
+    tasks_from: generate_ignition.yml

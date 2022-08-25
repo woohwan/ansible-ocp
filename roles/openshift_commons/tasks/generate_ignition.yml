@@ -1,0 +1,16 @@
+- name: Ensure required directory exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "{{ helper.timestamp_dir }}"
+
+- name: Check if timestamp {{ helper.timestamp_ignition_created }} exists
+  ansible.builtin.stat:
+    path: "{{ helper.timestamp_ignition_created }}"
+  register: timestamp_ignition_created
+
+- name: Configure installer
+  ansible.builtin.import_tasks: generate_ignition_tasks.yml
+  when: not timestamp_ignition_created.stat.exists

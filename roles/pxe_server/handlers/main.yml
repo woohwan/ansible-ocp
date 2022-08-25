@@ -1,2 +1,7 @@
 ---
 # handlers file for pxe_server
+- name: Restart dnsmasq
+  ansible.builtin.service:
+    name: dnsmasq
+    state: restarted
+  become: true

@@ -1,0 +1,34 @@
+# {{ ansible_managed }}
+apiVersion: v1
+baseDomain: '{{ openshift_install_config.base_domain }}'
+compute:
+  - hyperthreading: Enabled
+    name: worker
+    replicas: {{openshift_install_config.worker_replicas}}
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: {{openshift_install_config.master_replicas}}
+metadata:
+  name: '{{ openshift_install_config.name }}'
+networking:
+  clusterNetworks:
+    - cidr: 10.128.0.0/14
+      hostPrefix: 23
+  networkType: OVNKubernetes
+  serviceNetwork:
+    - 172.30.0.0/16
+platform:
+  # Uncomment this if installing to Bare metal, Libvirt, and oVirt target platforms
+  #  none: {}
+  # Uncomment this if installing to vSphere target platform. Remove the commented lines if you are not
+  # installing on vSphere.
+  vsphere:
+    vcenter: '{{ vsphere.vcenter_hostname }}'
+    username: '{{ vsphere.vcenter_username  }}'
+    password: '{{ vsphere.vcenter_password  }}'
+    datacenter: '{{ vsphere.datacenter_name }}'
+    defaultDatastore: '{{ vsphere.datastore_name }}'
+fips: false
+pullSecret: '{{ openshift_install_config.pull_secret }}'
+sshKey: '{{ openshift_install_config.ssh_key }}'

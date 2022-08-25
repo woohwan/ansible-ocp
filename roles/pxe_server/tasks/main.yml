@@ -1,2 +1,59 @@
 ---
 # tasks file for pxe_server
+- name: Enable PXE boot on dnsmasq
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "0644"
+  with_items:
+    - { src: dnsmasq.openshift-auto-upi.pxe.conf, dest: /etc/dnsmaq.d }
+  notify: Restart dnsmasq
+  become: true
+
+- name: Is firewalld running?
+  ansible.builtin.command:
+    cmd: firewall-cmd --state
+  changed_when: false
+  failed_when: false
+  register: firewalld
+  become: true
+
+- name: Enable tftp service on firewall
+  ansible.posix.firewalld:
+    service: tftp
+    permanent: true
+    immediate: true
+    state: enabled
+  when: firewalld.rc == 0
+  become: true
+
+- name: Ensure required directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  with_items:
+    - "{{ helper.tftp_dir }}"
+  become: true
+
+- name: Create {{ helper.tftp_cluster_dir }} directory
+  ansible.builtin.file:
+    path: "{{ helper.tftp_cluster_dir }}"
+    owner: "{{ ansible_real_user_id | int }}"
+    group: "{{ ansible_real_group_id | int }}"
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Install syslinux
+  ansible.builtin.yum:
+    name:
+      - syslinux
+    state: present
+  become: true
+
+- name: Copy syslinux files to the {{ helper.tftp_cluster_dir }} dir
+  ansible.builtin.shell: |
+    cp -ar /usr/share/syslinux/* '{{ helper.tftp_cluster_dir }}'
+  args:
+    creates: "{{ helper.tftp_cluster_dir }}/pxelinux.0"
