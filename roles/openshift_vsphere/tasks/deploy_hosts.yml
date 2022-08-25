@@ -1,0 +1,7 @@
+- name: Define existing vms
+  import_tasks: get_existing_vms.yml
+
+- name: Create virtual machines that don't exist
+  include_tasks: deploy_host.yml
+  when: virtual_machine_name[item.hostname] not in vsphere_existing_vms
+  with_items: "{{ openshift_cluster_hosts }}"

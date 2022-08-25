@@ -1,0 +1,1 @@
+- name: Fetch ignition file for machine {{ virtual_machine_names[item.hostname] }}

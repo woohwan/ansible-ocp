@@ -1,0 +1,11 @@
+- name: Waiting since {{ lookup("pipe", "date +%r") }} for the installation to complete
+  command: |
+    {{ helper.install_exe }} wait-for install-complete --dir '{{ helper.install_conf_dir }}'
+  changed_when: false
+
+- name: Installation complete
+  ansible.builtin.set_fact:
+    msg: |
+      *** INSTALLATION COMPLETE ***
+       See the instructions above for how to connect to your OpenShift {{ openshift_install_config.version }} cluster.
+- debug: msg="{{ msg.split('\n') }}"

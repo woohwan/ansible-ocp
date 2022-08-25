@@ -1,5 +1,5 @@
 rpm_name_map:
-  RedHat:
+  CentOS:
     default:
       python-jsonpatch: python-jsonpatch
       python-ovirt-engine-sdk4: python-ovirt-engine-sdk4
@@ -7,7 +7,7 @@ rpm_name_map:
       libvirt-python: libvirt-python
       python-pyghmi: python-pyghmi
       python-pyvmomi: python-pyvmomi
-    "8":
+    '8':
       python-jsonpatch: python3-jsonpatch
       python-ovirt-engine-sdk4: python3-ovirt-engine-sdk4
       python-dns: python3-dns

@@ -1,0 +1,32 @@
+- name: Wating since {{ lookup("pipe", "date +%r") }} for the bootstrap to complete
+  command: |
+    {{ helper.install_exe }} wait-for bootstrap-complete --dir '{{ helper.install_conf_dir }}'
+  changed_when: false
+
+- name: Boostrap complete
+  set_fact:
+    msg: |
+      *** BOOTSTRAP COMPLETE ***
+
+      Next steps:
+      1. Export the KUBECONFIG variable that defines the connecto to Openshift
+        
+        export KUBECONFIG={{ helper.install_conf_dir }}/auth/kubeconfig
+
+      2. You cna check the health of your cluster using:
+
+        {{ helper.oc_exe }} get clusteroperator
+
+        and
+
+        {{ helper.oc_exe }} get clusterversion
+
+      3. If you are adding worker nodes, check for pending csrs
+
+        {{ helper.oc_exe }} get csr
+
+        and approve the csrs using:
+
+        {{ helper.oc_exe }} adm certificate appove <csr>
+
+- debug: msg="{{ msg.split('\n') }}"
