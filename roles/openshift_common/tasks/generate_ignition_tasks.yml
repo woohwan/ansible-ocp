@@ -1,23 +1,23 @@
 # Create install config directory
 - name: Ensure required directories exist
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: '{{ item }}'
     state: directory
-    mode: "0755"
+    mode: '0755'
   with_items:
-    - "{{ helper.install_conf_dir }}"
+    - '{{ helper.install_conf_dir }}'
 
 - name: Copy install-config.yaml to the {{ helper.install_conf_dir }} directory
   ansible.builtin.template:
-    src: files/commons/install-config.yaml
-    dest: "{{ helper.install_conf_dir }}"
-    mode: "0755"
+    src: files/common/install-config.yaml
+    dest: '{{ helper.install_conf_dir }}'
+    mode: '0755'
 
 - name: Create a backup copy of install-config.yaml as the installer deletes the original
   ansible.builtin.template:
-    src: files/commons/install-config.yaml
-    dest: "{{ helper.install_conf_dir }}/install-config.backup.yaml"
-    mode: "0755"
+    src: files/common/install-config.yaml
+    dest: '{{ helper.install_conf_dir }}/install-config.backup.yaml'
+    mode: '0755'
     backup: true
 
 - name: Create k8s manifests

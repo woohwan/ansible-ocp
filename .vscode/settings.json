@@ -3,6 +3,9 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.associations": {
     "*.yaml": "ansible",
-    "*.yml": "ansible"
+    "*.yml": "yaml"
+  },
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/ansible/ansible-navigator/main/src/ansible_navigator/data/ansible-navigator.json": "file:///home/admin/workspace/ansible-ocp/delete_install_config.yml"
   }
 }

@@ -1,1 +1,75 @@
 - name: Fetch ignition file for machine {{ virtual_machine_names[item.hostname] }}
+  ansible.builtin.slurp:
+    src: '{{ helper.install_ignition_dir }}/{{ item.hostname }}.ign'
+  register: vsphere_ignition
+
+- name: Create a virtual machine from the template
+  vmware_guest:
+    hostname: '{{ vsphere.vcenter_hostname }}'
+    username: '{{ vsphere.vcenter_username }}'
+    password: '{{ vsphere.vcenter_password }}'
+    datacenter: '{{ vsphere.datacenter_name }}'
+    cluster: '{{ vsphere.cluster_name }}'
+    folder: '{{ vsphere.target_folder }}'
+    name: '{{ virtual_machine_names[item.hostname] }}'
+    template: '{{ vsphere.template_name }}'
+    customvalues:
+      - key: guestinfo.ignition.config.data.encoding
+        value: base64
+      - key: guestinfo.ignition.config.data
+        value: '{{ vsphere_ignition.content }}'
+      - key: disk.EnableUUID
+        value: 'TRUE'
+    disk:
+      - size_gb: '{{ item.disk_gb }}'
+        type: thin
+        datastore: '{{ vsphere.datastore_name }}'
+    hardware:
+      memory_mb: '{{ item.memory_gb * 1024 }}'
+      num_cpus: '{{ item.num_cpus }}'
+      scsi: paravirtual
+      hotadd_cpu: false
+      hotremove_cpu: false
+      hotadd_memory: false
+    wait_for_ip_address: false
+    validate_certs: '{{ vsphere.validate_certs }}'
+    state: present
+
+- name: Attache virtual machine to network {{ vsphere.network_name }}
+  vmware_guest:
+    hostname: '{{ vsphere.vcenter_hostname }}'
+    username: '{{ vsphere.vcenter_username }}'
+    password: '{{ vsphere.vcenter_password }}'
+    datacenter: '{{ vsphere.datacenter_name }}'
+    name: '{{ virtual_machine_names[item.hostname] }}'
+    networks:
+      - name: '{{ vsphere.network_name }}'
+        mac: '{{ item.macaddr }}'
+    validate_certs: '{{ vsphere.validate_certs }}'
+    state: present
+
+- name: Configure static IP
+  vmware_guest:
+    hostname: '{{ vsphere.vcenter_hostname }}'
+    username: '{{ vsphere.vcenter_username }}'
+    password: '{{ vsphere.vcenter_password }}'
+    datacenter: '{{ vsphere.datacenter_name }}'
+    name: '{{ virtual_machine_names[item.hostname] }}'
+    advanced_settings:
+      - key: guestinfo.afterburn.initrd.network-kargs
+        value:
+          "ip={{ item.ipaddr }}::{{ openshift_install_config.static_ips.parameters.gateway }}:\
+          {{ openshift_install_config.static_ips.parameters.netmask }}:{{ item.hostname }}:{{ openshift_install_config.static_ips.parameters.interface }}:none \
+          {% for dns in openshift_install_config.static_ips.parameters.nameservers %}nameserver={{ dns }} {% endfor %}"
+    validate_certs: '{{ vsphere.validate_certs }}'
+    state: present
+  when: openshift_install_config.static_ips.enabled
+
+- name: Power on virtual machine {{ virtual_machine_names[item.hostname] }}
+  vmware_guest:
+    hostname: '{{ vsphere.vcenter_hostname }}'
+    username: '{{ vsphere.vcenter_username }}'
+    password: '{{ vsphere.vcenter_password }}'
+    name: '{{ virtual_machine_names[item.hostname] }}'
+    validate_certs: '{{ vsphere.validate_certs }}'
+    state: poweredon

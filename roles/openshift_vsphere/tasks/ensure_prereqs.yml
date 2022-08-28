@@ -6,17 +6,17 @@
 
 - name: Read CoreOS stream
   ansible.builtin.import_role:
-    name: openshift_commons
+    name: openshift_common
     tasks_from: read_coreos_stream.yml
 
 - name: Download the CoreOS image
   ansible.builtin.import_role:
-    name: openshift_commons
+    name: openshift_common
     tasks_from: download_coreos.yml
   vars:
-    download_coreos_url: "{{ coreos.vmware_ova_url }}"
-    download_coreos_checksum: "{{ coreos.vmware_ova_checksum }}"
+    download_coreos_url: '{{ coreos.vmware_ova_url }}'
+    download_coreos_checksum: '{{ coreos.vmware_ova_checksum }}'
 
 - name: Set image filename
   ansible.builtin.set_fact:
-    vsphere_image_filename: "{{ download_coreos_image_filename }}"
+    vsphere_image_filename: '{{ download_coreos_image_filename }}'
