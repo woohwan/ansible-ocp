@@ -7,6 +7,11 @@ openshift_cluster_hosts:
     memory_gb: 16
     disk_gb: 120
     ignition_config: bootstrap.ign
+    ignition_transform:
+      # filetranspiler_roots:
+      #   - files/ignition/filetranspiler/bootstrap
+      jsonpatches:
+        - files/ignition/jsonpatch/bootstrap/password.json    
 
   # - hostname: master1
   #   roles: [master]
