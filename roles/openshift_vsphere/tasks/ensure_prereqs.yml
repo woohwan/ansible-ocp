@@ -1,8 +1,8 @@
-- name: Install vSphere Python SDK used by Ansible to talk to vSphere
-  ansible.builtin.yum:
-    name: '{{ rpm_name["python-pyvmomi"] }}'
-    state: present
-  become: true
+# - name: Install vSphere Python SDK used by Ansible to talk to vSphere
+#   ansible.builtin.yum:
+#     name: '{{ rpm_name["python-pyvmomi"] }}'
+#     state: present
+#   become: true
 
 - name: Read CoreOS stream
   ansible.builtin.import_role:

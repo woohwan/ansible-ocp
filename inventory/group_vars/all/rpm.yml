@@ -1,5 +1,5 @@
 rpm_name_map:
-  CentOS:
+  RedHat:
     default:
       python-jsonpatch: python-jsonpatch
       python-ovirt-engine-sdk4: python-ovirt-engine-sdk4
