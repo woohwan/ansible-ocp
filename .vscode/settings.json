@@ -6,6 +6,12 @@
     "*.yml": "yaml"
   },
   "yaml.schemas": {
-    "https://raw.githubusercontent.com/ansible/ansible-navigator/main/src/ansible_navigator/data/ansible-navigator.json": "file:///home/admin/workspace/ansible-ocp/delete_install_config.yml"
+    "https://raw.githubusercontent.com/ansible/ansible-navigator/main/src/ansible_navigator/data/ansible-navigator.json": [
+      "file:///home/admin/workspace/ansible-ocp/delete_install_config.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_common/tasks/ensure_pxe_prereqs.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_baremetal/tasks/main.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_baremetal/tasks/deploy_hosts.yml",
+      "file:///home/admin/workspace/ansible-ocp/roles/openshift_baremetal/tasks/ensure_prereqs.yml"
+    ]
   }
 }

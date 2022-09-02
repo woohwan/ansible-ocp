@@ -13,7 +13,7 @@ openshift_install_config:
   worker_replicas: 0
   ignition_url_prefix: "http://192.168.150.1:81/openshift-auto-upi/mycluster"
   static_ips:
-    enabled: true
+    enabled: false
     parameters:
       gateway: 192.168.150.1
       netmask: 255.255.255.0

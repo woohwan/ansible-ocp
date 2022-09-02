@@ -1,0 +1,10 @@
+- name: Install pyghmi required by Ansible
+  ansible.builtin.yum:
+    name: '{{ rpm_name["python-pyghmi"] }}'
+    state: present
+  become: true
+
+- name: Ensure PXE prerequisites
+  ansible.builtin.import_role:
+    name: openshift_common
+    tasks_from: ensure_pxe_prereqs.yml

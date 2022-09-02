@@ -1,0 +1,16 @@
+- name: Create Empty bootstrap machine
+  collections: vmware.vmware_rest
+  vmware.vmware_rest.vcenter_vm:
+    placement:
+      cluster: myclsuter
+      datastore: datastore1
+      folder: '/mycluster/vm/ocp4'
+    name: bootstrap
+    guest_OS: RHEL_8_64
+    hardware_version: VMX_19
+    memory:
+      size_MiB: 8192
+    nics:
+      - mac_type: manual
+      - mac_address: '00:50:56:3c:0a:3d'
+  register: my_vm

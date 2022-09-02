@@ -1,0 +1,70 @@
+- name: Ensure required directories exist
+  ansible.builtin.file:
+    path: '{{ item }}'
+    owner: '{{ ansible_real_user_id | int }}'
+    group: '{{ ansible_real_group_id | int }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ helper.web_cluster_dir }}'
+  become: true
+
+- name: Copy ignition files to the webserver html directory
+  ansible.builtin.copy:
+    src: '{{ helper.install_ignition_dir }}/{{ item.hostname }}.ign'
+    dest: '{{ helper.web_cluster_dir }}/{{ item.hostname }}.ign'
+    remote_src: true
+    backup: true
+    mode: '0755'
+  with_items: '{{ openshift_cluster_hosts }}'
+
+- name: Read CoreOS stream
+  ansible.builtin.import_tasks: read_coreos_stream.yml
+
+- name: Download CoreOS image for baremetal
+  ansible.builtin.get_url:
+    url: '{{ item.url }}'
+    dest: '{{ helper.web_cluster_dir }}/{{ item.url | base }}'
+    checksum: 'sha256:{{ item.checksum }}'
+    mode: '0755'
+  retries: 3
+  with_items:
+    - url: '{{ coreos.installer_initramfs_url }}'
+      checksum: '{{ coreos.installer_initramfs_checksum }}'
+    - url: '{{ coreos.installer_kernel_url }}'
+      checksum: '{{ coreos.installer_kernel_checksum }}'
+    - url: '{{ coreos.metal_bios_url }}'
+      checksum: '{{ coreos.metal_bios_checksum }}'
+
+- name: Ensure required directories exist
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ helper.tftp_dir }}'
+  become: true
+
+- name: Ensure required directories exist
+  ansible.builtin.file:
+    path: '{{ item }}'
+    owner: '{{ ansible_real_user_id | int }}'
+    group: '{{ ansible_real_group_id | int }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ helper.tftp_cluster_dir }}'
+  become: true
+
+- name: Create {{ helper.tftp_cluster_dir }}/pxelinux.cfg directory
+  ansible.builtin.file:
+    dest: '{{ helper.tftp_cluster_dir }}/pxelinux.cfg'
+    state: directory
+    mode: '0755'
+
+- name: Create pxelinux.cfg configs
+  ansible.builtin.template:
+    src: files/boot/pxe/pxelinux.cfg/menu.cfg
+    dest: '{{ helper.tftp_cluster_dir }}/pxelinux.cfg/01-{{ item.macaddr | regex_replace(":", "-") }}'
+    mode: '0755'
+  with_items: '{{ openshift_cluster_hosts }}'

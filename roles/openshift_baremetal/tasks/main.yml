@@ -1,0 +1,17 @@
+---
+# tasks file for openshift_baremetal
+- name: Generate ignition configs
+  ansible.builtin.import_role:
+    name: openshift_common
+    tasks_from: generate_ignition.yml
+
+- name: Ensure prerequisites
+  ansible.builtin.import_tasks: ensure_prereqs.yml
+
+# - name: Deploy hosts
+#   ansible.builtin.import_tasks: deploy_hosts.yml
+
+# - name: Wait for the bootstrap to complete
+#   ansible.builtin.import_role:
+#     name: openshift_common
+#     tasks_from: wait_for_bootstrap.yml

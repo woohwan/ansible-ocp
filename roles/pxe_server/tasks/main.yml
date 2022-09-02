@@ -6,7 +6,7 @@
     dest: "{{ item.dest }}"
     mode: "0644"
   with_items:
-    - { src: dnsmasq.openshift-auto-upi.pxe.conf, dest: /etc/dnsmaq.d }
+    - {src: dnsmasq.openshift-auto-upi.pxe.conf, dest: /etc/dnsmasq.d}
   notify: Restart dnsmasq
   become: true
 
