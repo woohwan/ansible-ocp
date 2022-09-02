@@ -1,0 +1,74 @@
+- hosts: helper
+  tasks:
+    - name: Fetch ignition file for machine bootstrap
+      ansible.builtin.slurp:
+        src: '{{ helper.install_ignition_dir }}/bootstrap.ign'
+      register: vsphere_ignition
+
+    - name: Create a virtual machine from the template
+      vmware_guest:
+        hostname: '{{ vsphere.vcenter_hostname }}'
+        username: '{{ vsphere.vcenter_username }}'
+        password: '{{ vsphere.vcenter_password }}'
+        datacenter: '{{ vsphere.datacenter_name }}'
+        cluster: '{{ vsphere.cluster_name }}'
+        folder: '{{ vsphere.target_folder }}'
+        name: bootstrap
+        template: '{{ vsphere.template_name }}'
+        advanced_settings:
+          - key: guestinfo.ignition.config.data.encoding
+            value: base64
+          - key: guestinfo.ignition.config.data
+            value: '{{ vsphere_ignition.content }}'
+          - key: disk.EnableUUID
+            value: 'TRUE'
+        disk:
+          - size_gb: 120
+            type: thin
+            datastore: '{{ vsphere.datastore_name }}'
+        hardware:
+          memory_mb: 833608
+          num_cpus: 2
+          scsi: paravirtual
+          hotadd_cpu: false
+          hotremove_cpu: false
+          hotadd_memory: false
+        wait_for_ip_address: false
+        validate_certs: '{{ vsphere.validate_certs }}'
+        state: present
+
+    - name: Attache virtual machine to network OCP network
+      vmware_guest:
+        hostname: '{{ vsphere.vcenter_hostname }}'
+        username: '{{ vsphere.vcenter_username }}'
+        password: '{{ vsphere.vcenter_password }}'
+        datacenter: '{{ vsphere.datacenter_name }}'
+        name: bootstrap
+        networks:
+          - name: '{{ vsphere.network_name }}'
+            mac: '00:50:56:3c:0a:3d'
+        validate_certs: '{{ vsphere.validate_certs }}'
+        state: present
+
+    - name: Configure static IP
+      vmware_guest:
+        hostname: '{{ vsphere.vcenter_hostname }}'
+        username: '{{ vsphere.vcenter_username }}'
+        password: '{{ vsphere.vcenter_password }}'
+        datacenter: '{{ vsphere.datacenter_name }}'
+        name: bootstrap
+        advanced_settings:
+          - key: guestinfo.afterburn.initrd.network-kargs
+            value: "ip=192.168.150.20::192.168.150.1:255.255.255.0:bootstrap.mycluster.example.com::none nameserver=192.168.150.1"
+        validate_certs: '{{ vsphere.validate_certs }}'
+        state: present
+      when: openshift_install_config.static_ips.enabled
+
+    - name: Power on virtual machine {{ virtual_machine_names[item.hostname] }}
+      vmware_guest:
+        hostname: '{{ vsphere.vcenter_hostname }}'
+        username: '{{ vsphere.vcenter_username }}'
+        password: '{{ vsphere.vcenter_password }}'
+        name: bootstrap
+        validate_certs: '{{ vsphere.validate_certs }}'
+        state: poweredon
