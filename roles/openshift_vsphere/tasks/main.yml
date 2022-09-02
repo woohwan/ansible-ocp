@@ -21,15 +21,15 @@
   vars:
     wait_for_ssh_existing_vms: '{{ vsphere_existing_vms }}'
 
-# - name: Wait for the bootstrap to complete
-#   ansible.builtin.import_role:
-#     name: openshift_common
-#     tasks_from: wait_for_bootstrap.yml
+- name: Wait for the bootstrap to complete
+  ansible.builtin.import_role:
+    name: openshift_common
+    tasks_from: wait_for_bootstrap.yml
 
-# - name: Stop bootstrap virtual machine
-#   ansible.builtin.import_tasks: stop_bootstrap_vm.yml
+- name: Stop bootstrap virtual machine
+  ansible.builtin.import_tasks: stop_bootstrap_vm.yml
 
-# - name: Wait for the installation to complete
-#   ansible.builtin.import_role:
-#     name: openshift_common
-#     tasks_from: wait_for_install.yml
+- name: Wait for the installation to complete
+  ansible.builtin.import_role:
+    name: openshift_common
+    tasks_from: wait_for_install.yml
