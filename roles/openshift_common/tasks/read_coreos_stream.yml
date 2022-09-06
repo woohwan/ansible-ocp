@@ -26,6 +26,8 @@
       installer_initramfs_checksum: "{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats.pxe.initramfs.sha256 }}"
       installer_kernel_url: "{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats.pxe.kernel.location }}"
       installer_kernel_checksum: "{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats.pxe.kernel.sha256 }}"
+      installer_rootfs_url: "{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats.pxe.rootfs.location }}"
+      installer_rootfs_checksum: "{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats.pxe.rootfs.sha256 }}"
       metal_bios_url: '{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats["raw.gz"].disk.location }}'
       metal_bios_checksum: '{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.metal.formats["raw.gz"].disk.sha256 }}'
       vmware_ova_url: "{{ coreos_stream_metadata_json.architectures.x86_64.artifacts.vmware.formats.ova.disk.location }}"

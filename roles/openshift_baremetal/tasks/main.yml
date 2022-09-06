@@ -8,9 +8,8 @@
 - name: Ensure prerequisites
   ansible.builtin.import_tasks: ensure_prereqs.yml
 
-# - name: Deploy hosts
-#   ansible.builtin.import_tasks: deploy_hosts.yml
-
+- name: Deploy hosts
+  ansible.builtin.import_tasks: deploy_hosts.yml
 # - name: Wait for the bootstrap to complete
 #   ansible.builtin.import_role:
 #     name: openshift_common
