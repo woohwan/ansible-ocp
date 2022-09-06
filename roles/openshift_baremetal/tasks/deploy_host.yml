@@ -1,0 +1,35 @@
+- name: Create virtual machine {{ virtual_machine_names[item.hostname] }}
+  community.vmware.vmware_guest:
+    hostname: "{{ vsphere.vcenter_hostname }}"
+    username: "{{ vsphere.vcenter_username }}"
+    password: "{{ vsphere.vcenter_password }}"
+    validate_certs: "{{ vsphere.validate_certs }}"
+    datacenter: "{{ vsphere. datacenter_name }}"
+    folder: "/Datacenter/vm/mycluster"
+    name: "{{ virtual_machine_names[item.hostname] }}"
+    guest_id: rhel8_64Guest
+    networks:
+      - name: "{{ vsphere.network_name }}"
+        mac: "{{ item.macaddr }}"
+        device_type: vmxnet3
+    disk:
+      - size_gb: "{{ item.disk_gb }}"
+        type: thin
+        datastore: "{{ vsphere.datastore_name }}"
+    hardware:
+      memory_mb: "{{ item.memory_gb * 1024 }}"
+      num_cpus: "{{ item.num_cpus }}"
+      scsi: paravirtual
+      hotadd_cpu: false
+      hotremove_cpu: false
+      hotadd_memory: false
+    state: present
+
+- name: Power on virtual machine {{ virtual_machine_names[item.hostname] }}
+  vmware_guest:
+    hostname: "{{ vsphere.vcenter_hostname }}"
+    username: "{{ vsphere.vcenter_username }}"
+    password: "{{ vsphere.vcenter_password }}"
+    name: "{{ virtual_machine_names[item.hostname] }}"
+    validate_certs: "{{ vsphere.validate_certs }}"
+    state: poweredon

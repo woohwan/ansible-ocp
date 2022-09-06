@@ -1,2 +1,3 @@
 ---
 # vars file for openshift_vsphere
+ansible_python_interpreter: /usr/bin/python

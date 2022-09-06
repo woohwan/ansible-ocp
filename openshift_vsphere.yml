@@ -1,4 +1,3 @@
 - hosts: helper
-  tasks:
-    - ansible.builtin.import_role:
-        name: openshift_vsphere
+  roles:
+    - openshift_vsphere

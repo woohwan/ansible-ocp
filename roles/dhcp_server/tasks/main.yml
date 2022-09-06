@@ -24,7 +24,7 @@
     dest: "{{ item.dest }}"
     mode: "0644"
   with_items:
-    - { src: dnsmasq.openshift-auto-upi.dhcp.conf, dest: /etc/dnsmasq.d }
-    - { src: dnsmasq.openshift-auto-upi.hostsfile, dest: /etc }
+    - {src: dnsmasq.openshift-auto-upi.dhcp.conf, dest: /etc/dnsmasq.d}
+    - {src: dnsmasq.openshift-auto-upi.hostsfile, dest: /etc}
   notify: Restart dnsmasq
   become: true
