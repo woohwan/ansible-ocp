@@ -1,6 +1,8 @@
 # ansible-ocp  
 vSphere 상에서 OVA와 metal방식으로 Openshift 설치 테스트  
-
+기존 openshift_install_config.yaml에서 infra role -> worker role로 변경:  
+그렇지 않을 경우 ingress controller가 master노드에 deploy되는 경우가 있어 haproxy에서  
+라우팅이 되지 않아 OAuth 인증관련 에러가 발생해 cluster operator가 정상 시작 되지 않음.  
 
 bastion/helper node는 forward/reverse lookup이 가능해야 함.(같은 domain 사용할 것 )  
 ```  

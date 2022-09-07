@@ -1,0 +1,4 @@
+- hosts: helper
+  name: Create Openshift baremetal Cluster using PXE & vSphere
+  roles:
+    - openshift_baremetal

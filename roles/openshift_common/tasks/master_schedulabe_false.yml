@@ -25,13 +25,6 @@
     {{ helper.install_exe }} create manifests --dir '{{ helper.install_conf_dir }}'
   changed_when: false
 
-- name: Change master scheduler to false
-  ansible.builtin.lineinfile:
-    path: '{{ helper.manifests_dir }}/cluster-scheduler-02-config.yml'
-    search_string: '  mastersSchedulable:'
-    line: '  mastersSchedulable: false'
-    state: present
-
 - name: Create ignition configs
   ansible.builtin.command: |
     {{ helper.install_exe }} create ignition-configs --dir '{{ helper.install_conf_dir }}'

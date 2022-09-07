@@ -9,11 +9,12 @@ openshift_install_config:
   base_domain: example.com
   # cluster domain FQDN
   cluster_domain: mycluster.example.com
+  master_schedulable: false
   master_replicas: 1
   worker_replicas: 0
   ignition_url_prefix: "http://192.168.150.1:81/openshift-auto-upi/mycluster"
   static_ips:
-    enabled: false
+    enabled: true
     parameters:
       gateway: 192.168.150.1
       netmask: 255.255.255.0

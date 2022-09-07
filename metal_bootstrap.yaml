@@ -1,3 +1,0 @@
-- hosts: helper
-  roles:
-    - openshift_baremetal
